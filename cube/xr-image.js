@@ -166,22 +166,28 @@ function handleTouchMove(event) {
   const touches = event.touches;
 
   if (touches.length === 1) {
-    const currentTouch = touches[0];
+  const currentTouch = touches[0];
 
-    if (previousTouch) {
-      const deltaX = currentTouch.clientX - previousTouch.clientX;
-      const deltaY = currentTouch.clientY - previousTouch.clientY;
+  if (previousTouch) {
+    const deltaX = currentTouch.clientX - previousTouch.clientX;
 
-      // التحكم في الدوران إذا كان هناك لمست واحدة
-      const rotationFactor = 0.01;
-      selectedImage.rotation.y += deltaX * rotationFactor;
-      selectedImage.rotation.x += deltaY * rotationFactor;
-    }
+    // Control horizontal rotation only
+    const rotationFactor = 0.01;
+    selectedImage.rotation.y += deltaX * rotationFactor;
 
-    previousTouch = {
-      clientX: currentTouch.clientX,
-      clientY: currentTouch.clientY,
-    };
+    overlayContent.innerText = `Image Coordinates: x=${selectedImage.position.x.toFixed(
+      2
+    )}, y=${selectedImage.position.y.toFixed(
+      2
+    )}, z=${selectedImage.position.z.toFixed(
+      2
+    )}\nRotation: ${selectedImage.rotation.y.toFixed(2)}`;
+  }
+
+  previousTouch = {
+    clientX: currentTouch.clientX,
+    clientY: currentTouch.clientY,
+  };
   } else if (touches.length === 2) {
     // التحكم في التكبير والتصغير إذا كان هناك لمستين
     const pinchDistance = Math.hypot(
