@@ -131,9 +131,27 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.xr.enabled = true;
 
 document.body.appendChild(renderer.domElement);
-document.body.appendChild(
-  ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] })
-);
+  const arButton = ARButton.createButton(renderer, {
+    requiredFeatures: ["hit-test"],
+    optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
+    domOverlay: { root: document.body },
+  });
+
+  // Add the ARButton to the document body
+  document.body.appendChild(arButton);
+
+  // Create the Stop AR Button
+  const stopArButton = document.createElement("button");
+  stopArButton.textContent = "STOP AR";
+  stopArButton.style.display = "none";
+  document.body.appendChild(stopArButton);
+
+  // Handle click event for the Stop AR Button
+  stopArButton.addEventListener("click", () => {
+    if (currentSession !== null) {
+      currentSession.end();
+    }
+  });
 
 let controller = renderer.xr.getController(0);
 controller.addEventListener("select", onSelect);
@@ -152,6 +170,7 @@ function onSelect() {
           2
         )},
          y=${image.position.y.toFixed(2)}, z=${image.position.z.toFixed(2)}`;
+           stopArButton.style.display ="block";
       }
     }
   }
