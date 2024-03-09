@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { ARButton } from "three/examples/jsm/webxr/ARButton";
+  import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+
 
 const imagesArray = [
   { id: "carpet", src: "/images/carpet.png", alt: "Carpet" },
@@ -137,7 +139,7 @@ document.body.appendChild(renderer.domElement);
     domOverlay: { root: document.body },
   });
 
-  // Add the ARButton to the document body
+  // Add  the ARButton to the document body
   document.body.appendChild(arButton);
 
   // Create the Stop AR Button
